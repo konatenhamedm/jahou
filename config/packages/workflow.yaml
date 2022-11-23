@@ -1,0 +1,78 @@
+imports:
+  - './workflows/'
+framework:
+  workflows:
+    vente:
+      type: 'state_machine'
+      audit_trail:
+        enabled: true
+      marking_store:
+        type: 'method'
+        property: 'etat'
+      supports:
+        - App\Entity\Vente
+      initial_marking: creation_minute
+      places:
+        - creation_minute
+        - creation_facture
+      transitions:
+        passer:
+          from: creation_minute
+          to: creation_facture
+
+    appro:
+      type: 'state_machine'
+      audit_trail:
+        enabled: true
+      marking_store:
+        type: 'method'
+        property: 'etat'
+      supports:
+        - App\Entity\Sortie
+      initial_marking: initie
+      places:
+        - initie
+        - valider
+      transitions:
+        passer:
+          from: initie
+          to: valider
+
+    retour_fournisseur:
+      type: 'state_machine'
+      audit_trail:
+        enabled: true
+      marking_store:
+        type: 'method'
+        property: 'etat'
+      supports:
+        - App\Entity\RetourFournisseur
+      initial_marking: retour_f_cree
+      places:
+        - retour_f_cree
+        - retour_f_valider
+      transitions:
+        passer:
+          from: retour_f_cree
+          to: retour_f_valider
+
+    retour_client:
+      type: 'state_machine'
+      audit_trail:
+        enabled: true
+      marking_store:
+        type: 'method'
+        property: 'etat'
+      supports:
+        - App\Entity\RetourClient
+      initial_marking: retour_c_cree
+      places:
+        - retour_c_cree
+        - retour_c_valider
+      transitions:
+        passer:
+          from: retour_c_cree
+          to: retour_c_valider
+
+
+

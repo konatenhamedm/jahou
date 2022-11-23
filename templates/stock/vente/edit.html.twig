@@ -1,0 +1,351 @@
+{%block page_content %}
+{% form_theme form 'widget/fields-block.html.twig' %}
+    {% from '_macros/ligne_entree.html.twig' import  lignes_sortie %}
+<div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel">Modification vente</h5>
+    <div class="btn btn-icon btn-sm  ms-2" data-bs-dismiss="modal" aria-label="Close">
+            <span class="svg-icon svg-icon-2x text-white">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+					<rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="currentColor"></rect>
+					<rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="currentColor"></rect>
+				</svg>
+            </span>
+    </div>
+</div>
+{{ form_start(form, {'attr': {'role':'form', 'class': 'form'}}) }}
+<div class="modal-body">
+    <div id="list-ligne" data-prototype="{{ lignes_sortie(form.ligneSorties.vars.prototype, 1)|e }}"></div>
+    {{ include('_includes/ajax/response.html.twig') }}
+    <div class="row">
+        <div class="form-group col-md-6">
+            <label class="sr-onl" for="userinput1">Libelle*</label>
+            {{ form_widget(form.libelle) }}</div>
+        <div class="form-group col-md-6">
+            <label class="sr-onl" for="userinput1">Date vente*</label>
+            {{ form_widget(form.dateVente) }}</div>
+
+    </div>
+    <div class="row">
+        <div class="form-group col-md-12">
+            <label class="sr-onl" for="userinput1">Type*</label>
+            {{ form_widget(form.type) }}</div>
+    </div>
+    <br>
+    <div>
+        <h2>Infos client</h2>
+        <div class="row principal">
+            <div class="form-group col-md-12">
+                <label class="sr-onl" for="userinput1">Client*</label>
+                {{ form_widget(form.client) }}</div>
+        </div>
+        <div class="row divers">
+            <div class="form-group col-md-4">
+                <label class="sr-onl" for="userinput1">Nom*</label>
+                {{ form_widget(form.nom) }}</div>
+            <div class="form-group col-md-4">
+                <label class="sr-onl" for="userinput1">Prenoms*</label>
+                {{ form_widget(form.prenom) }}</div>
+            <div class="form-group col-md-4">
+                <label class="sr-onl" for="userinput1">Télephone*</label>
+                {{ form_widget(form.telephone) }}</div>
+        </div>
+    </div>
+
+    <br>
+    <div class="card shadow-sm">
+        <div class="col-md-12">
+            <button type="button" data-origine="1" class="btn btn-default add-ligne btn-xs" data-container=".doc-container">
+                <i class="fa fa-plus"></i>Ajouter une ligne
+            </button>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="form-group col-md-3">Article</div>
+                <div class="form-group col-md-1">Qté</div>
+                <div class="form-group col-md-3">Montant</div>
+                <div class="form-group col-md-3">Total</div>
+                <div class="form-group col-md-1">Rse</div>
+                <div class="form-group col-md-1 ">
+
+                </div>
+            </div>
+            <div class="doc-container">
+                {% for ligne in form.ligneSorties %}
+                    {{ lignes_sortie(ligne|e) }}
+                {% endfor %}
+            </div>
+            {#<div class="row">
+                <div class="form-group col-md-3">Total Montant :</div>
+                <div class="form-group col-md-1"> </div>
+                <div class="form-group col-md-3"></div>
+                <div class="form-group col-md-3">{{ form_row(form.total_montant,{'attr':{'class':'total_montant'}}) }}</div>
+                <div class="form-group col-md-1"><h4 style="font-weight: bold">Frcfa</h4> </div>
+
+
+                </div>
+            </div>#}
+        </div>
+    </div>
+</div>
+    <div class="modal-footer">
+        {# {{ include('_includes/ajax/loader.html.twig') }} #}
+        <button type="button" class="btn btn-default btn-sm" data-bs-dismiss="modal">Annuler</button>
+        <button type="submit" class="btn btn-main btn-ajax btn-sm"><span class="spinner-border d-none  spinner-ajax spinner-border-sm" role="status" aria-hidden="true"></span> Modifie</button>
+        {% if workflow_can(vente, 'passer') %}
+            {{ form_widget(form.transition) }}
+        {% endif %}
+
+    </div>
+    {{ form_widget(form._token) }}
+    {{ form_end(form, {render_rest: false}) }}
+{% endblock %}
+
+{% block java %}
+
+    <script>
+        $(function () {
+            init_select2('select');
+        });
+        var $type = $('.type');
+        if($type.val() == "DIRECTE"){
+            $('.principal').hide();
+            $('.divers').show();
+        }else if($type.val() == "INDIRECTE"){
+            $('.principal').show();
+            $('.divers').hide();
+            $('.nom').value="";
+            $('.prenom').value="";
+            $('.telephone').value="";
+
+        }else{
+            $('.principal').hide();
+            $('.divers').hide();
+            $('.nom').value="";
+            $('.prenom').value="";
+            $('.telephone').value="";
+        }
+
+        $('.del-col').first().hide();
+
+        var id=  $('.article').val();
+        $.ajax({
+            url: "{{ path('montant') }}",
+            data: {id: id},
+            type: 'get',
+            dataType: 'json',
+            success: function (response, status) {
+                $('.montant').val(response.prixVente).attr('data-montant', response.prixVente);
+                $('.total').val(($('.montant').val()*$('.quantite').val())-($('.montant').val()*$('.remise').val()/100));
+
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        });
+
+        $('.article').on('change',function (e) {
+            var $article = $(this);
+            var id= $article.val()
+            $.ajax({
+                url: "{{ path('montant') }}",
+                data: {id: id},
+                type: 'get',
+                dataType: 'json',
+                success: function (response, status) {
+                    $article.parents('.row-line').each(function () {
+                        $ligne = $(this);
+                        console.log($ligne);
+                        $ligne.find('.montant').val(response.prixVente).attr('data-montant', response.prixVente);
+                        $ligne.find('.total').val(($ligne.find('.montant').val()*$ligne.find('.quantite').val())-($ligne.find('.montant').val()*$ligne.find('.remise').val()/100));
+                    });
+                },
+                error: function (error) {
+                    console.log(error);
+                }
+            });
+
+
+        });
+
+        $('.quantite,.remise').on('change',function (e) {
+            const $this = $(this);
+
+            //alert('hhghdg')
+            console.log('-------------------------kkklkl--------------------------');
+
+            $this.parents('.card').find('.row-line').each(function () {
+                $ligne = $(this);
+
+                $ligne.find('.total').val(($ligne.find('.montant').val()*$ligne.find('.quantite').val())-($ligne.find('.montant').val()*$ligne.find('.remise').val()/100));
+            });
+
+            //$(this).closest('.carde').find('.bordereau_montant').val(total);
+        });
+
+        $('.type').on('change',function (e) {
+            $this = $(this);
+
+            if($this.val() == "DIRECTE"){
+                $('.principal').hide();
+                $('.divers').show();
+            }else if($this.val() == "INDIRECTE"){
+                $('.principal').show();
+                $('.divers').hide();
+                $('.nom').value="";
+                $('.prenom').value="";
+                $('.telephone').value="";
+
+            }else{
+                $('.principal').hide();
+                $('.divers').hide();
+                $('.nom').value="";
+                $('.prenom').value="";
+                $('.telephone').value="";
+            }
+
+            //alert($this.val());
+        })
+
+
+
+        $(function () {
+
+
+
+            const $container = $('.doc-container');
+            const $card = $('.card');
+            var index = $container.find('.row-line').length;
+            $container.find('.coutCump').attr('readonly', true)
+            const $addLink = $('.add-ligne');
+
+            $addLink.click(function(e) {
+
+                addLine($container);
+
+                e.preventDefault(); // évite qu'un # apparaisse dans l'URL
+
+                $('.article').on('change',function (e) {
+                    var $article = $(this);
+
+                    var id= $article.val()
+                    $.ajax({
+                        url: "{{ path('montant') }}",
+                        data: {id: id},
+                        type: 'get',
+                        dataType: 'json',
+                        success: function (response, status) {
+                            $article.parents('.row-line').each(function () {
+                                $ligne = $(this);
+                                console.log($ligne);
+                                $ligne.find('.montant').val(response.prixVente).attr('data-montant', response.prixVente);
+                                $ligne.find('.total').val(($ligne.find('.montant').val()*$ligne.find('.quantite').val())-($ligne.find('.montant').val()*$ligne.find('.remise').val()/100));
+                            });
+                        },
+                        error: function (error) {
+                            console.log(error);
+                        }
+                    });
+
+
+                });
+
+                $('.quantite,.remise').on('change',function (e) {
+                    const $this = $(this);
+
+                    //alert('hhghdg')
+                    console.log('-------------------------kkklkl--------------------------');
+                    var total = 0;
+                    $this.parents('.card').find('.row-line').each(function () {
+                        $ligne = $(this);
+
+                        $ligne.find('.total').val(($ligne.find('.montant').val()*$ligne.find('.quantite').val())-($ligne.find('.montant').val()*$ligne.find('.remise').val()/100));
+                    });
+
+                    //$(this).closest('.carde').find('.bordereau_montant').val(total);
+                });
+
+            });
+
+
+            // On ajoute un premier champ automatiquement s'il n'en existe pas déjà un (cas d'une nouvelle annonce par exemple).
+            /*if (index == 0) {
+            addimputation($container);
+            } else {*/
+            if (index > 0) {
+                $container.children('.row-line').each(function() {
+                    const $this = $(this);
+                    addDeleteLink($this);
+                    $this.find("select").each(function() {
+                        const $this = $(this);
+                        init_select2($this, null);
+                    });
+
+
+                });
+
+
+            }
+
+
+            // La fonction qui ajoute un formulaire Categorie
+            function addLine($container) {
+                // Dans le contenu de l'attribut « data-prototype », on remplace :
+                // - le texte "__name__label__" qu'il contient par le label du champ
+                // - le texte "__name__" qu'il contient par le numéro du champ
+                var $prototype = $($("#list-ligne").attr('data-prototype').replace(/__name__label__/g, 'Pièce ' + (index + 1)).replace(/__name__/g, index));
+                // On ajoute au prototype un lien pour pouvoir supprimer la prestation
+                addDeleteLink($prototype);
+                // On ajoute le prototype modifié à la fin de la balise <div>
+                $container.append($prototype);
+
+                $prototype.find("select").each(function() {
+                    const $this = $(this);
+                    init_select2($this, null);
+                });
+
+                index++;
+                var id= $prototype.find('.article').val()
+                $.ajax({
+                    url: "{{ path('montant') }}",
+                    data: {id: id},
+                    type: 'get',
+                    dataType: 'json',
+                    success: function (response, status) {
+                        $prototype.find('.montant').val(response.prixVente).attr('data-montant', response.prixVente);
+                        $prototype.find('.quantite').val(1).attr('data-montant', 1);
+                        $prototype.find('.total').val(response.prixVente-(response.prixVente*0/100)).attr('data-total', response.prixVente-(response.prixVente*0/100));
+                        $prototype.find('.remise').val(0).attr('data-remise', 0);
+                        console.log(response.prixVente);
+                    },
+                    error: function (error) {
+                        console.log(error);
+                    }
+                });
+
+
+            }
+
+
+            function addDeleteLink($prototype) {
+
+                // Création du lien
+                $deleteLink = $(`<a href="" class="btn btn-danger btn-xs" style="margin-top: 0px"><span class="bi bi-trash"></span></a>`);
+
+                // Ajout du lien
+                $prototype.find(".del-col").append($deleteLink);
+                // Ajout du listener sur le clic du lien
+                $deleteLink.click(function(e) {
+                    const $parent = $(this).closest('.row-line');
+                    $parent.remove();
+
+
+                    if (index > 0) {
+                        index -= 1;
+                    }
+
+                    e.preventDefault(); // évite qu'un # apparaisse dans l'URL
+                });
+            }
+        });
+    </script>
+{% endblock %}

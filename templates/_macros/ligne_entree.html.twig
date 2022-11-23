@@ -1,0 +1,168 @@
+{% macro list_ligne(ligne) %}
+    <div class="row row-line">
+        <div class="form-group col-md-6">{{ form_row(ligne.article,{attr:{'readonly':'readonly'}}) }}</div>
+        <div class="form-group col-md-5">{{ form_row(ligne.quantite,{attr:{'readonly':'readonly'}}) }}</div>
+        <div class="form-group col-md-1 del-col">
+
+        </div>
+    </div>
+{% endmacro %}
+
+{% macro lignes(article) %}
+    <div class="row row-line">
+        <div class="form-group col-md-6">{{ form_row(article.article) }}</div>
+        <div class="form-group col-md-5">{{ form_row(article.quantite) }}</div>
+        <div class="form-group col-md-1 del-col">
+
+        </div>
+    </div>
+{% endmacro %}
+
+
+{% macro lignes_sortie(article) %}
+    <div class="row row-line">
+        <div class="form-group col-md-3">{{ form_row(article.article,{'attr':{'class':'article'}}) }}</div>
+        <div class="form-group col-md-1">{{ form_row(article.quantite,{'attr':{'class':'quantite'}}) }}</div>
+        <div class="form-group col-md-3">{{ form_row(article.montant,{'attr':{'class':'montant'}}) }}</div>
+        <div class="form-group col-md-3">{{ form_row(article.total,{'attr':{'class':'total'}}) }}</div>
+        <div class="form-group col-md-1">{{ form_row(article.remise,{'attr':{'class':'remise'}}) }}</div>
+        <div class="form-group col-md-1 del-col">
+
+        </div>
+    </div>
+{% endmacro %}
+
+{% macro ligneretourachat(article) %}
+    <div class="row row-line">
+        <div class="form-group col-md-6">{{ form_row(article.article) }}</div>
+        <div class="form-group col-md-5">{{ form_row(article.quantiteRetournee) }}</div>
+        <div class="form-group col-md-1 del-col">
+
+        </div>
+    </div>
+{% endmacro %}
+
+{% macro lignedemandeachat(article) %}
+    <div class="row row-line">
+        <div class="form-group col-md-5">{{ form_row(article.article) }}</div>
+        <div class="form-group col-md-3">{{ form_row(article.quantite) }}</div>
+        <div class="form-group col-md-3">{{ form_row(article.cout) }}</div>
+        <div class="form-group col-md-1 del-col">
+
+        </div>
+    </div>
+{% endmacro %}
+
+{% macro lignedemandeachatvalidee(article) %}
+    <div class="row row-line">
+        <div class="form-group col-md-3">{{ form_row(article.article,{'attr':{'readonly' : true}}) }}</div>
+        <div class="form-group col-md-2">{{ form_row(article.quantite,{'attr':{'readonly' : true}}) }}</div>
+        <div class="form-group col-md-3">{{ form_row(article.cout,{'attr':{'readonly' : true}}) }}</div>
+        <div class="form-group col-md-3">{{ form_row(article.quantiteValidee) }}</div>
+        <div class="form-group col-md-1 del-col">
+
+        </div>
+    </div>
+{% endmacro %}
+
+
+{% macro lignedemandeachatrecu(article) %}
+    <div class="row row-line">
+        <div class="form-group col-md-3">{{ form_row(article.article,{'attr':{'readonly' : true}}) }}</div>
+        <div class="form-group col-md-2">{{ form_row(article.quantite,{'attr':{'readonly' : true}}) }}</div>
+        <div class="form-group col-md-2">{{ form_row(article.cout,{'attr':{'readonly' : true}}) }}</div>
+        <div class="form-group col-md-2">{{ form_row(article.quantiteValidee,{'attr':{'readonly' : true}}) }}</div>
+        <div class="form-group col-md-2">{{ form_row(article.quantiteRecue) }}</div>
+        <div class="form-group col-md-1 del-col">
+
+        </div>
+    </div>
+{% endmacro %}
+
+{% macro ligneretourachatcreation(article) %}
+    <div class="row row-line">
+        <div class="form-group col-md-6">{{ form_row(article.article,{'attr':{'readonly' : true}}) }}</div>
+        <div class="form-group col-md-5">{{ form_row(article.quantiteRecue,{'attr':{'readonly' : true}}) }}</div>
+        <div class="form-group col-md-1 del-col">
+
+        </div>
+    </div>
+{% endmacro %}
+
+{% macro lignedemande(article) %}
+    <div class="row row-line">
+        <div class="form-group col-md-6">{{ form_row(article.article) }}</div>
+        <div class="form-group col-md-5">{{ form_row(article.quantiteDemande) }}</div>
+        <div class="form-group col-md-1 del-col">
+
+        </div>
+    </div>
+{% endmacro %}
+{% macro lignevalide(article) %}
+    <div class="row row-line">
+        <div class="form-group col-md-4">{{ form_row(article.article,{'attr':{'readonly' : true}}) }}</div>
+        <div class="form-group col-md-3">{{ form_row(article.quantiteDemande,{'attr':{'readonly' : true}}) }}</div>
+        <div class="form-group col-md-4">{{ form_row(article.quantiteValidee,{attr:{'required':'required'}}) }}</div>
+        <div class="form-group col-md-1 del-col">
+
+        </div>
+    </div>
+{% endmacro %}
+
+{% macro lignerecue(article) %}
+    <div class="row row-line">
+        <div class="form-group col-md-3">{{ form_row(article.article,{'attr':{'readonly' : true}}) }}</div>
+        <div class="form-group col-md-3">{{ form_row(article.quantiteDemande,{'attr':{'readonly' : true}}) }}</div>
+        <div class="form-group col-md-2">{{ form_row(article.quantiteValidee,{'attr':{'readonly' : true}}) }}</div>
+        <div class="form-group col-md-3">{{ form_row(article.quantiteRecue) }}</div>
+        <div class="form-group col-md-1 ">
+
+        </div>
+    </div>
+{% endmacro %}
+
+{% macro lignecreation(article) %}
+    <div class="row row-line">
+        <div class="form-group col-md-6">{{ form_row(article.article,{'attr':{'readonly' : true}}) }}</div>
+        <div class="form-group col-md-5">{{ form_row(article.quantiteRecue,{'attr':{'readonly' : true}}) }}</div>
+        {#<div class="form-group col-md-">{{ form_row(article.quantiteRecue) }}</div>#}
+        <div class="form-group col-md-1 del-col">
+
+        </div>
+    </div>
+{% endmacro %}
+
+{% macro ligneretourdemande(article) %}
+    <div class="row row-line">
+        <div class="form-group col-md-4">{{ form_row(article.article,{'attr':{'readonly' : true}}) }}</div>
+        <div class="form-group col-md-3">{{ form_row(article.quantiteSortie,{'attr':{'readonly' : true}}) }}</div>
+        <div class="form-group col-md-3">{{ form_row(article.quantiteRetournee) }}</div>
+        <div class="form-group col-md-1 del-col">
+
+        </div>
+    </div>
+{% endmacro %}
+
+{% macro groupe_specialite(ligne) %}
+    <div class="row-colonne mb-3 row">
+        {% set lib_article = ligne.vars.value.article.designation | default('') %}
+        {#{{ dump(redaction.children.path.vars.data) }}#}
+        <div class="col-md-6">{{ form_widget(ligne.article) }}</div>
+        <div class="col-md-5">{{ form_widget(ligne.quantite) }}</div>
+        <div class="col-md-1 del-col" data-parent=".row-colonne"></div>
+    </div>
+
+{% endmacro  %}
+
+{% macro prototype_groupe_specialite(form) %}
+    <div class="list-colonne"  data-prototype="{{ _self.groupe_specialite(form.ligneEntrees.vars.prototype)|e }}"></div>
+    <button type="button" data-protoname="__name__" class="btn btn-default add_line btn-xs" id="add_ligne"  data-protoclass=".list-colonne" data-container=".column-container">
+        <i class="fa fa-plus"></i> Ajouter une ligne
+    </button>
+    <br>
+    <div class="column-container" data-childclass="">
+        {% for item in form.ligneEntrees %}
+            {{ _self.groupe_specialite(item|e) }}
+        {% endfor %}
+    </div>
+{% endmacro %}

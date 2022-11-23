@@ -1,0 +1,18 @@
+/*html,body {
+    font-family: 'Poppins', "Helvetica", "sans-serif"!important;
+}*/
+
+.btn.btn-main {
+    color: #FFFFFF;
+    background-color: #cf2e2e;
+    border-color: #cf2e2e;
+}
+
+.form-control, .form-control:focus {  
+    border-color: #cf2e2e;
+}
+
+.text-main {
+    color: #cf2e2e;
+}
+
