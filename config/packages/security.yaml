@@ -39,7 +39,7 @@ security:
         - { path: ^/css/, role: PUBLIC_ACCESS }
         - { path: ^/login$, role: PUBLIC_ACCESS }
         - { path: ^/login_check$, role: PUBLIC_ACCESS }
-
+        - { path: ^/admin, role: IS_AUTHENTICATED_FULLY}
 
 when@test:
     security:

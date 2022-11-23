@@ -22,7 +22,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/parametre/fonction')]
+#[Route('/admin/parametre/fonction')]
 class FonctionController extends AbstractController
 {
     #[Route('/', name: 'app_parametre_fonction_index', methods: ['GET', 'POST'])]

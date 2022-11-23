@@ -17,7 +17,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/rh/fournisseur')]
+#[Route('/admin/rh/fournisseur')]
 class FournisseurController extends AbstractController
 {
     #[Route('/', name: 'app_rh_fournisseur_index', methods: ['GET', 'POST'])]

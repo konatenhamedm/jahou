@@ -34,7 +34,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Workflow\Exception\LogicException;
 use Symfony\Component\Workflow\Registry;
 
-#[Route('/stock/retour/client')]
+#[Route('/admin/stock/retour/client')]
 class RetourClientController extends AbstractController
 {
     private $workflow;

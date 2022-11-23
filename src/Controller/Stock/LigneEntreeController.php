@@ -17,7 +17,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/stock/ligne/entree')]
+#[Route('/admin/stock/ligne/entree')]
 class LigneEntreeController extends AbstractController
 {
     #[Route('/', name: 'app_stock_ligne_entree_index', methods: ['GET', 'POST'])]

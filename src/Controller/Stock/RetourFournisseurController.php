@@ -27,7 +27,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Workflow\Exception\LogicException;
 use Symfony\Component\Workflow\Registry;
 
-#[Route('/stock/retour/fournisseur')]
+#[Route('/admin/stock/retour/fournisseur')]
 class RetourFournisseurController extends AbstractController
 {
 

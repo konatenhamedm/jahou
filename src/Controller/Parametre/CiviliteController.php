@@ -17,7 +17,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/parametre/civilite')]
+#[Route('/admin/parametre/civilite')]
 class CiviliteController extends AbstractController
 {
     #[Route('/', name: 'app_parametre_civilite_index', methods: ['GET', 'POST'])]

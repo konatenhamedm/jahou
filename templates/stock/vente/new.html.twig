@@ -116,7 +116,7 @@
             success: function (response, status) {
                     $('.montant').val(response.prixVente).attr('data-montant', response.prixVente);
                     $('.total').val(($('.montant').val()*$('.quantite').val())-($('.montant').val()*$('.remise').val()/100));
-
+                $('.total_montant').val($('.total').val());
             },
             error: function (error) {
                 console.log(error);
@@ -238,7 +238,7 @@
 
                         $this.parents('.card').find('.row-line').each(function () {
                             $ligne = $(this);
-                            somme = somme + $ligne.find('.total').val();
+                            somme = somme + parseFloat($ligne.find('.total').val());
                             $ligne.find('.total').val(($ligne.find('.montant').val()*$ligne.find('.quantite').val())-($ligne.find('.montant').val()*$ligne.find('.remise').val()/100));
                         });
 
@@ -298,7 +298,15 @@
                         $prototype.find('.quantite').val(1).attr('data-montant', 1);
                         $prototype.find('.total').val(response.prixVente-(response.prixVente*0/100)).attr('data-total', response.prixVente-(response.prixVente*0/100));
                         $prototype.find('.remise').val(0).attr('data-remise', 0);
-                        console.log(response.prixVente);
+
+
+                        $prototype.find('.total').parents('.card').find('.row-line').each(function () {
+                            $ligne = $(this);
+                            somme = somme + $ligne.find('.total').val();
+                            $ligne.find('.total').val(($ligne.find('.montant').val()*$ligne.find('.quantite').val())-($ligne.find('.montant').val()*$ligne.find('.remise').val()/100));
+                        });
+
+                        $prototype.find('.total').closest('.card-body').find('.total_montant').val(somme);
                     },
                     error: function (error) {
                         console.log(error);

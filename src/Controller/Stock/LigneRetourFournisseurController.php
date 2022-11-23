@@ -17,7 +17,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/stock/ligne/retour/fournisseur')]
+#[Route('/admin/stock/ligne/retour/fournisseur')]
 class LigneRetourFournisseurController extends AbstractController
 {
     #[Route('/', name: 'app_stock_ligne_retour_fournisseur_index', methods: ['GET', 'POST'])]

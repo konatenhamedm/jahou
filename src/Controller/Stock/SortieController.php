@@ -22,7 +22,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Workflow\Exception\LogicException;
 use Symfony\Component\Workflow\Registry;
 
-#[Route('/stock/approvisionnement')]
+#[Route('/admin/stock/approvisionnement')]
 class SortieController extends AbstractController
 {
 

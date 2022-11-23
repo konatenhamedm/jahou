@@ -19,7 +19,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/stock/article')]
+#[Route('/admin/stock/article')]
 class ArticleController extends AbstractController
 {
     #[Route('/', name: 'app_stock_article_index', methods: ['GET', 'POST'])]

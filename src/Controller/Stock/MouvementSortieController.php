@@ -17,7 +17,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/stock/mouvement/sortie')]
+#[Route('/admin/stock/mouvement/sortie')]
 class MouvementSortieController extends AbstractController
 {
     #[Route('/', name: 'app_stock_mouvement_sortie_index', methods: ['GET', 'POST'])]

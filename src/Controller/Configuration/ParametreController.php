@@ -8,7 +8,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('config/parametere')]
+#[Route('/admin/config/parametere')]
 class ParametreController extends AbstractController
 {
 

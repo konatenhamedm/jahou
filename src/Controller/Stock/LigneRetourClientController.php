@@ -17,7 +17,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/stock/ligne/retour/client')]
+#[Route('/admin/stock/ligne/retour/client')]
 class LigneRetourClientController extends AbstractController
 {
     #[Route('/', name: 'app_stock_ligne_retour_client_index', methods: ['GET', 'POST'])]

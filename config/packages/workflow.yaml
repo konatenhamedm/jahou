@@ -1,5 +1,3 @@
-imports:
-  - './workflows/'
 framework:
   workflows:
     vente:

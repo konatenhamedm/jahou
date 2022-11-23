@@ -25,7 +25,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Workflow\Exception\LogicException;
 use Symfony\Component\Workflow\Registry;
 
-#[Route('/stock/vente')]
+
 class VenteController extends AbstractController
 {
 
@@ -41,7 +41,7 @@ class VenteController extends AbstractController
     }
 
 
-    #[Route('/', name: 'app_stock_vente_index', methods: ['GET', 'POST'])]
+    #[Route('/admin/stock/vente/', name: 'app_stock_vente_index', methods: ['GET', 'POST'])]
     public function index(Request $request, DataTableFactory $dataTableFactory): Response
     {
        //
@@ -141,7 +141,7 @@ class VenteController extends AbstractController
         ]);
     }
 
-    #[Route('/new', name: 'app_stock_vente_new', methods: ['GET', 'POST'])]
+    #[Route('/admin/stock/vente/new', name: 'app_stock_vente_new', methods: ['GET', 'POST'])]
     public function new(Request $request, VenteRepository $venteRepository, FormError $formError): Response
     {
         $vente = new Vente();
@@ -205,7 +205,7 @@ class VenteController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/show', name: 'app_stock_vente_show', methods: ['GET'])]
+    #[Route('/admin/stock/vente/{id}/show', name: 'app_stock_vente_show', methods: ['GET'])]
     public function show(Vente $vente): Response
     {
         return $this->render('stock/vente/show.html.twig', [
@@ -293,7 +293,7 @@ class VenteController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/delete', name: 'app_stock_vente_delete', methods: ['DELETE', 'GET'])]
+    #[Route('/admin/stock/vente/{id}/delete', name: 'app_stock_vente_delete', methods: ['DELETE', 'GET'])]
     public function delete(Request $request, Vente $vente, VenteRepository $venteRepository): Response
     {
         $form = $this->createFormBuilder()
@@ -356,7 +356,7 @@ class VenteController extends AbstractController
     }
 
 
-    #[Route('/montant', name: 'montant', methods: ['GET', 'POST'])]
+    #[Route('/stock/vente/montant', name: 'montant', methods: ['GET', 'POST'])]
     public function existe(ArticleRepository $repository,Request $request): Response
     {
         $response = new Response();
@@ -382,7 +382,7 @@ class VenteController extends AbstractController
 
     }
 
-    #[Route('/{id}/imprimer', name: 'imprimer', methods: ['GET', 'POST'])]
+    #[Route('/admin/stock/vente/{id}/imprimer', name: 'imprimer', methods: ['GET', 'POST'])]
     public function imprimer($id, Request $request)
     {
 

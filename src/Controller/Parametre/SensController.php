@@ -17,7 +17,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/parametre/sens')]
+#[Route('/admin/parametre/sens')]
 class SensController extends AbstractController
 {
     #[Route('/', name: 'app_parametre_sens_index', methods: ['GET', 'POST'])]

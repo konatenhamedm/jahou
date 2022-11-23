@@ -17,7 +17,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/rh/client')]
+#[Route('/admin/rh/client')]
 class ClientController extends AbstractController
 {
     #[Route('/', name: 'app_rh_client_index', methods: ['GET', 'POST'])]
