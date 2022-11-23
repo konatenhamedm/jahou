@@ -39,6 +39,26 @@ class LigneMouvementRepository extends ServiceEntityRepository
         }
     }
 
+    public function getLigne($value){
+        return $this->createQueryBuilder('m')
+            ->select('m.id','a.designation','a.prixVente','m.remise')
+            ->innerJoin('m.article','a')
+            ->andWhere('m.mouvement = :val')
+            ->setParameter('val', $value)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function getMontant($value){
+        return $this->createQueryBuilder('m')
+            ->select('SUM(a.prixVente*m.quantite - (a.prixVente*m.remise*m.quantite/100))')
+            ->innerJoin('m.article','a')
+            ->andWhere('m.mouvement = :val')
+            ->setParameter('val', $value)
+            ->getQuery()
+            ->getSingleResult();
+    }
+
 //    /**
 //     * @return LigneMouvement[] Returns an array of LigneMouvement objects
 //     */

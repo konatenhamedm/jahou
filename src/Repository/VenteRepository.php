@@ -39,6 +39,7 @@ class VenteRepository extends ServiceEntityRepository
         }
     }
 
+
 //    /**
 //     * @return Vente[] Returns an array of Vente objects
 //     */

@@ -39,6 +39,15 @@ class MouvementSortieRepository extends ServiceEntityRepository
         }
     }
 
+    public function getVente($value){
+        return $this->createQueryBuilder('m')
+            ->select('m.id')
+            ->andWhere('m.vente = :val')
+           ->setParameter('val', $value)
+           ->getQuery()
+           ->getOneOrNullResult();
+    }
+
 //    /**
 //     * @return MouvementSortie[] Returns an array of MouvementSortie objects
 //     */

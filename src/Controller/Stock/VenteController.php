@@ -7,6 +7,9 @@ use App\Entity\LigneSortie;
 use App\Entity\Vente;
 use App\Form\VenteType;
 use App\Repository\ArticleRepository;
+use App\Repository\LigneMouvementRepository;
+use App\Repository\MouvementRepository;
+use App\Repository\MouvementSortieRepository;
 use App\Repository\VenteRepository;
 use App\Service\ActionRender;
 use App\Service\FormError;
@@ -383,13 +386,15 @@ class VenteController extends AbstractController
     }
 
     #[Route('/admin/stock/vente/{id}/imprimer', name: 'imprimer', methods: ['GET', 'POST'])]
-    public function imprimer($id, Request $request)
+    public function imprimer($id, Request $request,VenteRepository $venteRepository,MouvementRepository $mouvementRepository, MouvementSortieRepository $mouvementSortieRepository,LigneMouvementRepository $repository)
     {
 
-
+         dd($repository->getMontant($mouvementSortieRepository->getVente($id)));
 
         $html = $this->renderView('stock/vente/imprimer.html.twig', [
-           // 'info'=>$scolariteRepository->getInfoEleve($id),
+           'lignes'=>$repository->getLigne($mouvementSortieRepository->getVente($id)),
+            'info'=>$mouvementRepository->find($mouvementSortieRepository->getVente($id)),
+            'Total'=>$repository->getMontant($mouvementSortieRepository->getVente($id))
             //'versement' => $versementRepository->getAllVersementBySolarite($id),
         ]);
 

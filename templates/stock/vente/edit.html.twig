@@ -135,7 +135,7 @@
             dataType: 'json',
             success: function (response, status) {
                 $('.montant').val(response.prixVente).attr('data-montant', response.prixVente);
-                $('.total').val(($('.montant').val()*$('.quantite').val())-($('.montant').val()*$('.remise').val()/100));
+                $('.total').val(($('.montant').val()*$('.quantite').val())-($('.montant').val()*$('.remise').val()*$('.quantite').val()/100));
 
             },
             error: function (error) {
@@ -156,7 +156,7 @@
                         $ligne = $(this);
                         console.log($ligne);
                         $ligne.find('.montant').val(response.prixVente).attr('data-montant', response.prixVente);
-                        $ligne.find('.total').val(($ligne.find('.montant').val()*$ligne.find('.quantite').val())-($ligne.find('.montant').val()*$ligne.find('.remise').val()/100));
+                        $ligne.find('.total').val(($ligne.find('.montant').val()*$ligne.find('.quantite').val())-($ligne.find('.montant').val()*$ligne.find('.remise').val()*$ligne.find('.quantite').val()/100));
                     });
                 },
                 error: function (error) {
@@ -176,7 +176,7 @@
             $this.parents('.card').find('.row-line').each(function () {
                 $ligne = $(this);
 
-                $ligne.find('.total').val(($ligne.find('.montant').val()*$ligne.find('.quantite').val())-($ligne.find('.montant').val()*$ligne.find('.remise').val()/100));
+                $ligne.find('.total').val(($ligne.find('.montant').val()*$ligne.find('.quantite').val())-($ligne.find('.montant').val()*$ligne.find('.remise').val()*$ligne.find('.quantite').val()/100));
             });
 
             //$(this).closest('.carde').find('.bordereau_montant').val(total);
@@ -238,7 +238,7 @@
                                 $ligne = $(this);
                                 console.log($ligne);
                                 $ligne.find('.montant').val(response.prixVente).attr('data-montant', response.prixVente);
-                                $ligne.find('.total').val(($ligne.find('.montant').val()*$ligne.find('.quantite').val())-($ligne.find('.montant').val()*$ligne.find('.remise').val()/100));
+                                $ligne.find('.total').val(($ligne.find('.montant').val()*$ligne.find('.quantite').val())-($ligne.find('.montant').val()*$ligne.find('.remise').val()*$ligne.find('.quantite').val()/100));
                             });
                         },
                         error: function (error) {
@@ -258,7 +258,7 @@
                     $this.parents('.card').find('.row-line').each(function () {
                         $ligne = $(this);
 
-                        $ligne.find('.total').val(($ligne.find('.montant').val()*$ligne.find('.quantite').val())-($ligne.find('.montant').val()*$ligne.find('.remise').val()/100));
+                        $ligne.find('.total').val(($ligne.find('.montant').val()*$ligne.find('.quantite').val())-($ligne.find('.montant').val()*$ligne.find('.remise').val()*$ligne.find('.quantite').val()/100));
                     });
 
                     //$(this).closest('.carde').find('.bordereau_montant').val(total);
