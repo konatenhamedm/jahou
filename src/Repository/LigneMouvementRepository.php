@@ -41,7 +41,7 @@ class LigneMouvementRepository extends ServiceEntityRepository
 
     public function getLigne($value){
         return $this->createQueryBuilder('m')
-            ->select('m.id','a.designation','a.prixVente','m.remise')
+            ->select('m.id','a.designation','a.prixVente as montant','m.quantite','m.remise','a.prixVente*m.quantite - (a.prixVente*m.remise*m.quantite/100) as total')
             ->innerJoin('m.article','a')
             ->andWhere('m.mouvement = :val')
             ->setParameter('val', $value)
@@ -56,7 +56,7 @@ class LigneMouvementRepository extends ServiceEntityRepository
             ->andWhere('m.mouvement = :val')
             ->setParameter('val', $value)
             ->getQuery()
-            ->getSingleResult();
+            ->getSingleScalarResult();
     }
 
 //    /**

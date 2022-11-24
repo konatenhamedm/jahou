@@ -386,15 +386,16 @@ class VenteController extends AbstractController
     }
 
     #[Route('/admin/stock/vente/{id}/imprimer', name: 'imprimer', methods: ['GET', 'POST'])]
-    public function imprimer($id, Request $request,VenteRepository $venteRepository,MouvementRepository $mouvementRepository, MouvementSortieRepository $mouvementSortieRepository,LigneMouvementRepository $repository)
+    public function imprimer($id,Vente $vente, Request $request,VenteRepository $venteRepository,MouvementRepository $mouvementRepository, MouvementSortieRepository $mouvementSortieRepository,LigneMouvementRepository $repository)
     {
 
-         dd($repository->getMontant($mouvementSortieRepository->getVente($id)));
+         //dd($repository->getMontant($mouvementSortieRepository->getVente($id)));
 
         $html = $this->renderView('stock/vente/imprimer.html.twig', [
            'lignes'=>$repository->getLigne($mouvementSortieRepository->getVente($id)),
             'info'=>$mouvementRepository->find($mouvementSortieRepository->getVente($id)),
-            'Total'=>$repository->getMontant($mouvementSortieRepository->getVente($id))
+            'total'=>$repository->getMontant($mouvementSortieRepository->getVente($id)),
+            'vente'=>$vente
             //'versement' => $versementRepository->getAllVersementBySolarite($id),
         ]);
 
@@ -402,7 +403,7 @@ class VenteController extends AbstractController
         //}
         $mpdf = new \Mpdf\Mpdf([
 
-            'mode' => 'utf-8', 'format' => 'A5'
+            'mode' => 'utf-8', 'format' => 'A4'
         ]);
         $mpdf->PageNumSubstitutions[] = [
             'from' => 1,
