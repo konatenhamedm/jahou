@@ -4,10 +4,12 @@ namespace App\Controller\Stock;
 
 use App\Entity\Article;
 use App\Entity\Modele;
+use App\Entity\Vente;
 use App\Form\ArticleType;
 use App\Repository\ArticleRepository;
 use App\Service\ActionRender;
 use App\Service\FormError;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
 use Omines\DataTablesBundle\Adapter\Doctrine\ORMAdapter;
 use Omines\DataTablesBundle\Column\BoolColumn;
@@ -18,10 +20,37 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Workflow\Registry;
 
 #[Route('/admin/stock/article')]
 class ArticleController extends AbstractController
 {
+
+
+    private $em;
+    public function __construct(EntityManagerInterface $em)
+    {
+
+        $this->em = $em;
+
+    }
+    private function numero()
+    {
+
+        $query = $this->em->createQueryBuilder();
+        $query->select("count(a.id)")
+            ->from(Article::class, 'a');
+
+        $nb = $query->getQuery()->getSingleScalarResult();
+        if ($nb == 0){
+            $nb = 1;
+        }else{
+            $nb =$nb + 1;
+        }
+        return (date("y").'PC'.date("m", strtotime("now")).str_pad($nb, 3, '0', STR_PAD_LEFT));
+
+    }
+
     #[Route('/', name: 'app_stock_article_index', methods: ['GET', 'POST'])]
     public function index(Request $request, DataTableFactory $dataTableFactory): Response
     {
@@ -130,7 +159,7 @@ class ArticleController extends AbstractController
 
 
             if ($form->isValid()) {
-
+                $article->setReference($this->numero());
                 $articleRepository->save($article, true);
                 $data = true;
                 $message       = 'Opération effectuée avec succès';

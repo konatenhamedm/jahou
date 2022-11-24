@@ -6,6 +6,8 @@ use App\Entity\Article;
 use App\Entity\Modele;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -15,9 +17,18 @@ class ArticleType extends AbstractType
     {
         $builder
             ->add('designation')
-            ->add('reference')
-            ->add('seuil')
-            ->add('quantite')
+            ->add('seuil',IntegerType::class,[
+
+            ])
+            ->add('prixVente',MoneyType::class,[
+
+            ])
+            ->add('prixAchat',MoneyType::class,[
+
+            ])
+            ->add('quantite',IntegerType::class,[
+
+            ])
             ->add('modele', EntityType::class, [
                 'class' => Modele::class,
                 'choice_label' => 'libelle',
